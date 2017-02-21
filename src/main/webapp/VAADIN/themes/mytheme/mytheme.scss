@@ -35,4 +35,147 @@
   @include valo;
 
   // Insert your own theme rules here
+  $accent: #1ABC9C;
+  .v-loading-indicator{
+    background-color: $accent;
+    color: $accent;
+  }
+  .v-Notification.notify {
+    background: #fff;
+    border: 1px solid $accent;
+    color: black;
+    font-family: "Open Sans Light";
+    font-size: 22px;
+  }
+
+
+  .v-layout{
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    margin: auto;
+  }
+  .v-layout > div{
+    display: block !important;
+  }
+  .v-label{
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: -5px;
+  }
+  v-filterselect.input{
+    width: 200px;
+    margin: 15px 0;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    background-color: transparent;
+    font-family: FontAwesome, "Open Sans Light", sans-serif;
+    border: none;
+    border-bottom: 1px solid #BDC3C7;
+    outline: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .v-filterselect-input{
+    border: none !important;
+    background-color: transparent !important;
+    border-bottom: 1px solid $accent !important;
+    outline: none !important;
+    border-radius: 0 !important;
+  }
+  .v-filterselect-button{
+    border: none !important;
+   }
+  .v-filterselect [class$="button"]:before{
+    color: $accent !important;
+    backgroun-color: $accent !important;
+  }
+
+
+
+  .v-textfield:focus,.v-textfield:active{
+     border-bottom: 1px solid $accent !important;
+  }
+  input.v-textfield-focus{
+    outline: none;
+    box-shadow: 0 0 0 transparent !important;
+    border-bottom: 1px solid $accent;
+  }
+  .v-button{
+    display: block;
+    float: none;
+    width: 200px;
+    margin: auto;
+  }
+    .v-button.link{
+      display: block;
+      border: none;
+      font-size: 15px;
+      font-family: "Open Sans Light";
+      background-color: transparent;
+      outline: none !important;
+      letter-spacing: 1px;
+      text-transform: none;
+      outline: none !important;
+      margin-top: -25px;
+      box-shadow: 0 0 0 transparent !important;
+      color: #111;
+      opacity: .7;
+    }
+    .v-button.link:hover{
+      opacity: 1;
+      color: #111;
+    }
+   .v-pressed{
+     outline: none;
+    box-shadow: 0 0 0 transparent !important;
+   }
+   .mytheme .v-loading-indicator{
+    background-color: #1ABC9C;
+   }
+   .mytheme .v-grid-row-selected  > .v-grid-cell{
+    background-color: #1ABC9C;
+    background-image: none;
+    color: #333;
+    border-color: $accent;
+   }
+   .mytheme .v-grid-row-selected  > .v-grid-cell-focused:before{
+    border-color: $accent;
+   }
+   .v-grid-cell-focused{
+
+   }
+   .mytheme .v-button:focus:after{
+      border-color: $accent;
+      outline: none;
+      box-shadow: 0 0 0 transparent !important;
+   }
+    .v-button.btn{
+      width:180px;
+      box-sizing: border-box;
+      text-align: center;
+      background: transparent;
+      border: 1px solid $accent;
+      color: $accent;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 5px;
+      display: inline-block;
+      outline: none !important;
+      box-shadow: none;
+      margin: 15px auto;
+      display: block;
+      float: none;
+    }
+
+  .v-button-focus, .v-button-active, .v-button.link:focus, .v-button.linkactive{
+    outline: none;
+    box-shadow: 0 0 0 transparent !important;
+  }
+  .v-button.btn:hover{
+    background-color: $accent;
+    color: #fff;
+  }
 }
