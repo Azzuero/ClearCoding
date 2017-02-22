@@ -69,12 +69,19 @@ public class MyUI extends UI {
 
         sendBtn.addClickListener(e->{
 
-            if(!employeeComboBox.isEmpty() && !asigneeComboBox.isEmpty() && !parentComboBox.isEmpty() && !skillLvlComboBox.isEmpty()){
-                Notification.show("Click: ","This record is updated with success!" ,Notification.Type.TRAY_NOTIFICATION);
-            }else{
-                Notification.show("Invalid Form: ","Empty Fields" ,Notification.Type.ERROR_MESSAGE);
-
-            }
+            if(employeeComboBox.isEmpty())
+                Notification.show("Employee : ","is empty", Notification.Type.ERROR_MESSAGE);
+                else
+                    if(asigneeComboBox.isEmpty())
+                        Notification.show("Asignee : ","is empty", Notification.Type.ERROR_MESSAGE);
+                        else
+                            if(parentComboBox.isEmpty())
+                                Notification.show("Skill Parent : ","is empty", Notification.Type.ERROR_MESSAGE);
+                                else
+                                    if(skillLvlComboBox.isEmpty())
+                                        Notification.show("Skill Level : ","is empty", Notification.Type.ERROR_MESSAGE);
+                else
+                    Notification.show("Click: ","This record is updated with success!" ,Notification.Type.TRAY_NOTIFICATION);
 
 
         });

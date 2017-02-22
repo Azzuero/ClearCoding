@@ -1,5 +1,8 @@
 package ClearCoding.Utils;
 
+import ClearCoding.Entity.Skill;
+import ClearCoding.Entity.Skill_Set;
+
 public class Utilites {
 
     public static int getEmployeeRank(String position){
@@ -38,5 +41,7 @@ public class Utilites {
     public static long toLong(String input){
         return Long.parseLong(input);
     }
+
+
 
 }

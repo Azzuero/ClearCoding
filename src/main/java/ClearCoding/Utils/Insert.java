@@ -8,8 +8,14 @@ import org.hibernate.Session;
 
 import java.util.Date;
 
-public class Insert {
+import static ClearCoding.Utils.Utilites.toLong;
 
+public class Insert {
+    public static Boolean isSkillLower(Skill skill, Skill_Set skill_set){
+        boolean b = false;
+        if (toLong(skill_set.getSkillBySkillId().getName()) > toLong(skill.getName())) b=true;
+        return b;
+    }
     public static void insertSkillSet(Long id, Employee employee, Skill skill, Date assignedDate, String assignee){
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
