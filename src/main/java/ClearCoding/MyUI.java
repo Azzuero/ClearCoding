@@ -51,7 +51,7 @@ public class MyUI extends UI {
         parentComboBox.setNullSelectionAllowed(false);
         parentComboBox.addItems(Crud.getSkillParent());
 
-        //skilLvlComboBox
+        //skilLvlComboBox s das
         Label skillLvlLabel = new Label("Skill Lavel");
         ComboBox skillLvlComboBox = new ComboBox();
         skillLvlComboBox.setNullSelectionAllowed(false);
