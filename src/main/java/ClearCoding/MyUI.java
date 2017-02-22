@@ -3,6 +3,7 @@ package ClearCoding;
 import ClearCoding.Entity.Employee;
 import ClearCoding.Entity.Skill;
 import ClearCoding.Utils.Crud;
+import ClearCoding.Utils.Utilites;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
@@ -51,15 +52,15 @@ public class MyUI extends UI {
         parentComboBox.setNullSelectionAllowed(false);
         parentComboBox.addItems(Crud.getSkillParent());
 
-        //skilLvlComboBox s das
+        //skilLvlComboBox
         Label skillLvlLabel = new Label("Skill Lavel");
         ComboBox skillLvlComboBox = new ComboBox();
         skillLvlComboBox.setNullSelectionAllowed(false);
         parentComboBox.addValueChangeListener(e -> {
             skillLvlComboBox.removeAllItems();
-            for (Skill next : Crud.getSkillLevel(String.valueOf(e.getProperty().getValue()))) {
+            for (Skill next : Crud.getSkillLvlWiden(employeeComboBox.getValue().toString(), parentComboBox.getValue().toString())) {
                 skillLvlComboBox.addItems(next.getName());
-                System.out.println(next.getName());
+                //System.out.println(next.getName());
             }
         });
 
@@ -68,22 +69,17 @@ public class MyUI extends UI {
         sendBtn.setStyleName("btn");
 
         sendBtn.addClickListener(e->{
-
             if(employeeComboBox.isEmpty())
-                Notification.show("Employee : ","is empty", Notification.Type.ERROR_MESSAGE);
-                else
-                    if(asigneeComboBox.isEmpty())
-                        Notification.show("Asignee : ","is empty", Notification.Type.ERROR_MESSAGE);
-                        else
-                            if(parentComboBox.isEmpty())
-                                Notification.show("Skill Parent : ","is empty", Notification.Type.ERROR_MESSAGE);
-                                else
-                                    if(skillLvlComboBox.isEmpty())
-                                        Notification.show("Skill Level : ","is empty", Notification.Type.ERROR_MESSAGE);
-                else
-                    Notification.show("Click: ","This record is updated with success!" ,Notification.Type.TRAY_NOTIFICATION);
-
-
+                Utilites.showErrNotification("Employee : ","is empty");
+            else if(asigneeComboBox.isEmpty())
+                Utilites.showErrNotification("Asignee : ","is empty");
+            else if(parentComboBox.isEmpty())
+                Utilites.showErrNotification("Skill Parent : ","is empty");
+            else if(skillLvlComboBox.isEmpty())
+                Utilites.showErrNotification("Skill Level : ","is empty");
+            else{
+                Utilites.showTryNotification("Click: ","This record is updated with success!");
+            }
         });
 
         formLayout.addComponents(employeeLable, employeeComboBox, comboAsigneelabel, asigneeComboBox, dateField, parentLabel, parentComboBox, skillLvlLabel, skillLvlComboBox, sendBtn);

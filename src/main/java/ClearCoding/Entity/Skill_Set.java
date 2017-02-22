@@ -4,13 +4,16 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "SKILL_SET", schema = "JUNITTEST", catalog = "")
+@Table(name = "SKILL_SET")
 public class Skill_Set {
     private long id;
     private Employee employeeByCrmd;
     private Skill skillBySkillId;
     private Date assignedDate;
     private String assigneeId;
+
+    public Skill_Set() {
+    }
 
     public Skill_Set(long id, Employee employeeByCrmd, Skill skillBySkillId, Date assignedDate, String assigneeId) {
         this.id = id;
