@@ -1,6 +1,7 @@
 package ClearCoding.Utils;
 
 public class Utilites {
+
     public static int getEmployeeRank(String position){
         int rank=0;
         switch (position) {
@@ -21,8 +22,8 @@ public class Utilites {
         }
         return rank;
     }
-    public static boolean numberOrNot(String input)
-    {
+
+    public static boolean numberOrNot(String input){
         try
         {
             Integer.parseInt(input);
@@ -33,4 +34,9 @@ public class Utilites {
         }
         return true;
     }
+
+    public static long toLong(String input){
+        return Long.parseLong(input);
+    }
+
 }

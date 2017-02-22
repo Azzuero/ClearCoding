@@ -1,79 +1,76 @@
 package ClearCoding;
 
-import javax.servlet.annotation.WebServlet;
-
-import ClearCoding.Entity.*;
+import ClearCoding.Entity.Employee;
+import ClearCoding.Entity.Skill;
 import ClearCoding.Utils.Crud;
-import ClearCoding.Utils.HibernateUtil;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
-import org.hibernate.Session;
 
 import javax.servlet.annotation.WebServlet;
-import java.util.List;
-
-
-
-
-import java.util.List;
 
 @Theme("mytheme")
 public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+
         FormLayout formLayout = new FormLayout();
         formLayout.setSpacing(true);
-        VerticalLayout Principal_Page = new VerticalLayout();
-        Label EmployeeLable = new Label("CRMD");
+        VerticalLayout mainPage = new VerticalLayout();
 
-        ComboBox comboAsignee = new ComboBox();
+        //employeeComboBox
+        Label employeeLable = new Label("CRMD");
+        ComboBox employeeComboBox = new ComboBox();
+        employeeComboBox.addItems(Crud.getEmployeeList());
+        employeeComboBox.setInputPrompt("Employee");
 
+        //assigneeComboBox
         Label comboAsigneelabel = new Label("Asignee CRMD");
-        comboAsignee.setNullSelectionAllowed(false);
-        comboAsignee.setStyleName("center input");
-        comboAsignee.setInputPrompt("\uF2C0 Username");
+        ComboBox asigneeComboBox = new ComboBox();
+        asigneeComboBox.setNullSelectionAllowed(false);
+        asigneeComboBox.setInputPrompt("Assignee");
 
-        DateField dateSkill = new DateField();
-        ComboBox Employee = Crud.getEmployee();
-        Employee.setNullSelectionAllowed(false);
-        Employee.addValueChangeListener(e -> {
-            comboAsignee.removeAllItems();
+        employeeComboBox.setNullSelectionAllowed(false);
+        employeeComboBox.addValueChangeListener(e -> {
+            asigneeComboBox.removeAllItems();
             for (Employee next : Crud.getAssignee(String.valueOf(e.getProperty().getValue())))
-                comboAsignee.addItems(next.getCrmd());
+                asigneeComboBox.addItems(next.getCrmd());
 
         });
-        ComboBox comboParent = new ComboBox();
-        comboParent.setNullSelectionAllowed(false);
-        comboParent.addItems(Crud.getSkillParent());
-        Label comboParentlabel = new Label("Skill Parent");
 
-        ComboBox combolvl = new ComboBox();
-        Label combolvlLabel = new Label("Skill Lavel");
+        DateField dateField = new DateField();
 
-        combolvl.setNullSelectionAllowed(false);
-        comboParent.addValueChangeListener(e -> {
-            combolvl.removeAllItems();
+        //parentComboBox
+        Label parentLabel = new Label("Skill Parent");
+        ComboBox parentComboBox = new ComboBox();
+        parentComboBox.setNullSelectionAllowed(false);
+        parentComboBox.addItems(Crud.getSkillParent());
+
+        //skilLvlComboBox
+        Label skillLvlLabel = new Label("Skill Lavel");
+        ComboBox skillLvlComboBox = new ComboBox();
+        skillLvlComboBox.setNullSelectionAllowed(false);
+        parentComboBox.addValueChangeListener(e -> {
+            skillLvlComboBox.removeAllItems();
             for (Skill next : Crud.getSkillLevel(String.valueOf(e.getProperty().getValue()))) {
-                combolvl.addItems(next.getName());
+                skillLvlComboBox.addItems(next.getName());
                 System.out.println(next.getName());
             }
-
         });
-        Button send = new Button("Send");
-        send.setStyleName("btn");
+
+        //sendBtn
+        Button sendBtn = new Button("Send");
+        sendBtn.setStyleName("btn");
 
 
-        formLayout.addComponents( EmployeeLable, Employee, comboAsigneelabel,comboAsignee, dateSkill, comboParentlabel, comboParent, combolvlLabel, combolvl, send);
-        Principal_Page.addComponents(formLayout);
-        Principal_Page.setMargin(true);
-        Principal_Page.setSpacing(true);
-        session.close();
-        setContent(Principal_Page);
+        formLayout.addComponents(employeeLable, employeeComboBox, comboAsigneelabel, asigneeComboBox, dateField, parentLabel, parentComboBox, skillLvlLabel, skillLvlComboBox, sendBtn);
+        mainPage.addComponents(formLayout);
+        mainPage.setMargin(true);
+        mainPage.setSpacing(true);
+        setContent(mainPage);
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
