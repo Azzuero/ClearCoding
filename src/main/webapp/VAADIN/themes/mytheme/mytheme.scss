@@ -46,6 +46,11 @@
     color: black;
     font-family: "Open Sans Light";
     font-size: 22px;
+    opacity: .7;
+    transition: all .5s ease-in-out;
+  }
+  .v-Notification.notify:hover{
+    opacity: 1;
   }
 
 
@@ -65,7 +70,7 @@
     letter-spacing: 2px;
     margin-bottom: -5px;
   }
-  v-filterselect.input{
+  v-filterselect.input, .v-datefield, .v-datefield-popupcalendar{
     width: 200px;
     margin: 15px 0;
     font-size: 16px;
@@ -78,17 +83,18 @@
     border-radius: 0;
     box-shadow: none;
   }
-  .v-filterselect-input{
+  .v-filterselect-input, .v-datefield, .v-datefield-popupcalendar{
     border: none !important;
     background-color: transparent !important;
     border-bottom: 1px solid $accent !important;
     outline: none !important;
     border-radius: 0 !important;
+    box-shadow: none;
   }
   .v-filterselect-button{
     border: none !important;
    }
-  .v-filterselect [class$="button"]:before{
+  .v-filterselect [class$="button"]:before, .v-datefield [class*="button"]:before{
     color: $accent !important;
     backgroun-color: $accent !important;
   }
@@ -108,6 +114,7 @@
     float: none;
     width: 200px;
     margin: auto;
+    transition: all .5s ease-in-out;
   }
     .v-button.link{
       display: block;
@@ -123,6 +130,7 @@
       box-shadow: 0 0 0 transparent !important;
       color: #111;
       opacity: .7;
+
     }
     .v-button.link:hover{
       opacity: 1;
@@ -168,6 +176,7 @@
       margin: 15px auto;
       display: block;
       float: none;
+      transition: all .3s ease-in-out;
     }
 
   .v-button-focus, .v-button-active, .v-button.link:focus, .v-button.linkactive{

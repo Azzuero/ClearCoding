@@ -13,6 +13,7 @@ import java.util.Set;
 import static ClearCoding.Utils.Utilites.numberOrNot;
 
 public class Crud {
+
     public static List<Employee> getEmployeeList() {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
@@ -23,20 +24,26 @@ public class Crud {
     }
     public static List<Employee> getAssignee(String CRMD) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from Employee where CRMD =:crmd");
-        query.setParameter("crmd", CRMD);
-        List<Employee> getemployeebycrmd = query.list();
+
         List<Employee> getallemployee = session.createQuery("from Employee").list();
+        Employee employee = new Employee();
+        for(Employee next: getallemployee){
+            if(next.getCrmd().equals(CRMD))
+                employee = next;
+        }
+
         List<Employee> assignees = new ArrayList<Employee>(0);
-        for (Employee next : getemployeebycrmd) {
-            for (Employee nextAll : getallemployee) {
-                if (Utilites.getEmployeeRank(next.getPosition()) < Utilites.getEmployeeRank(nextAll.getPosition()))
-                    assignees.add(nextAll);
-                else if (Utilites.getEmployeeRank(next.getPosition()) == 4 && Utilites.getEmployeeRank(nextAll.getPosition()) == 4)
-                    if (!next.getCrmd().equals(nextAll.getCrmd()))
-                        assignees.add(nextAll);
+        for(Employee next: getallemployee){
+            if(next.getAmbient().equals(employee.getAmbient())){
+                if(Utilites.getEmployeeRank(next.getPosition()) > Utilites.getEmployeeRank(employee.getPosition()))
+                    assignees.add(next);
+                else if (Utilites.getEmployeeRank(next.getPosition()) == 4 && Utilites.getEmployeeRank(employee.getPosition()) == 4){
+                    if (!next.getCrmd().equals(employee.getCrmd()))
+                        assignees.add(next);
+                }
             }
         }
+
         session.close();
         return assignees;
     }
@@ -51,7 +58,6 @@ public class Crud {
                 if(numberOrNot(next.getName()))
                     if(next.getParentId()==next1.getId()){
                         outputSkils.add(next1.getName());
-                        // System.out.println(next1.getName());
                     }
             }
         Set<String> hs = new HashSet<String>();

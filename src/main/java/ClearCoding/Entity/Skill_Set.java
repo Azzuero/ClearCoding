@@ -1,23 +1,32 @@
 package ClearCoding.Entity;
+
 import javax.persistence.*;
-import java.sql.Time;
+import java.util.Date;
 
 @Entity
 @Table(name = "SKILL_SET", schema = "JUNITTEST", catalog = "")
 public class Skill_Set {
-    private Time assignedDate;
-    private String assigneeId;
     private long id;
     private Employee employeeByCrmd;
     private Skill skillBySkillId;
+    private Date assignedDate;
+    private String assigneeId;
+
+    public Skill_Set(long id, Employee employeeByCrmd, Skill skillBySkillId, Date assignedDate, String assigneeId) {
+        this.id = id;
+        this.employeeByCrmd = employeeByCrmd;
+        this.skillBySkillId = skillBySkillId;
+        this.assignedDate = assignedDate;
+        this.assigneeId = assigneeId;
+    }
 
     @Basic
     @Column(name = "ASSIGNED_DATE", nullable = true)
-    public Time getAssignedDate() {
+    public Date getAssignedDate() {
         return assignedDate;
     }
 
-    public void setAssignedDate(Time assignedDate) {
+    public void setAssignedDate(Date assignedDate) {
         this.assignedDate = assignedDate;
     }
 
@@ -41,28 +50,6 @@ public class Skill_Set {
         this.id = id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Skill_Set skillSet = (Skill_Set) o;
-
-        if (id != skillSet.id) return false;
-        if (assignedDate != null ? !assignedDate.equals(skillSet.assignedDate) : skillSet.assignedDate != null)
-            return false;
-        if (assigneeId != null ? !assigneeId.equals(skillSet.assigneeId) : skillSet.assigneeId != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = assignedDate != null ? assignedDate.hashCode() : 0;
-        result = 31 * result + (assigneeId != null ? assigneeId.hashCode() : 0);
-        result = 31 * result + (int) (id ^ (id >>> 32));
-        return result;
-    }
 
     @ManyToOne
     @JoinColumn(name = "CRMD", referencedColumnName = "CRMD", nullable = false)

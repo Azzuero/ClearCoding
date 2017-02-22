@@ -25,7 +25,7 @@ public class MyUI extends UI {
         Label employeeLable = new Label("CRMD");
         ComboBox employeeComboBox = new ComboBox();
         for(Employee employeeItem:Crud.getEmployeeList())
-        employeeComboBox.addItem(employeeItem.getCrmd());
+            employeeComboBox.addItem(employeeItem.getCrmd());
         employeeComboBox.setInputPrompt("Employee");
 
         //assigneeComboBox
@@ -33,6 +33,7 @@ public class MyUI extends UI {
         ComboBox asigneeComboBox = new ComboBox();
         asigneeComboBox.setNullSelectionAllowed(false);
         asigneeComboBox.setInputPrompt("Assignee");
+
 
         employeeComboBox.setNullSelectionAllowed(false);
         employeeComboBox.addValueChangeListener(e -> {
@@ -63,9 +64,20 @@ public class MyUI extends UI {
         });
 
         //sendBtn
-        Button sendBtn = new Button("Send");
+        Button sendBtn = new Button("SEND");
         sendBtn.setStyleName("btn");
 
+        sendBtn.addClickListener(e->{
+
+            if(!employeeComboBox.isEmpty() && !asigneeComboBox.isEmpty() && !parentComboBox.isEmpty() && !skillLvlComboBox.isEmpty()){
+                Notification.show("Click: ","This record is updated with success!" ,Notification.Type.TRAY_NOTIFICATION);
+            }else{
+                Notification.show("Invalid Form: ","Empty Fields" ,Notification.Type.ERROR_MESSAGE);
+
+            }
+
+
+        });
 
         formLayout.addComponents(employeeLable, employeeComboBox, comboAsigneelabel, asigneeComboBox, dateField, parentLabel, parentComboBox, skillLvlLabel, skillLvlComboBox, sendBtn);
         mainPage.addComponents(formLayout);
