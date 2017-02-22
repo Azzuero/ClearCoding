@@ -24,7 +24,8 @@ public class MyUI extends UI {
         //employeeComboBox
         Label employeeLable = new Label("CRMD");
         ComboBox employeeComboBox = new ComboBox();
-        employeeComboBox.addItems(Crud.getEmployeeList());
+        for(Employee employeeItem:Crud.getEmployeeList())
+        employeeComboBox.addItem(employeeItem.getCrmd());
         employeeComboBox.setInputPrompt("Employee");
 
         //assigneeComboBox

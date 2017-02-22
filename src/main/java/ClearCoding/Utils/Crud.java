@@ -43,7 +43,6 @@ public class Crud {
 
     public static List<String> getSkillParent() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-
         List<Skill> inputSkills = session.createQuery("from Skill").list();
         List<Skill> input1Skills = session.createQuery("from Skill").list();
         List<String> outputSkils = new ArrayList<String>(0);
@@ -59,9 +58,7 @@ public class Crud {
         hs.addAll(outputSkils);
         outputSkils.clear();
         outputSkils.addAll(hs);
-
         session.close();
-
         return outputSkils;
     }
 
