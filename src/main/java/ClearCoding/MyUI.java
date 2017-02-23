@@ -3,6 +3,7 @@ package ClearCoding;
 import ClearCoding.Entity.Employee;
 import ClearCoding.Entity.Skill;
 import ClearCoding.Utils.Crud;
+import ClearCoding.Utils.Insert;
 import ClearCoding.Utils.Utilites;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -11,6 +12,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.Date;
 
 @Theme("mytheme")
 public class MyUI extends UI {
@@ -57,7 +59,7 @@ public class MyUI extends UI {
         skillLvlComboBox.setNullSelectionAllowed(false);
         parentComboBox.addValueChangeListener(e -> {
             skillLvlComboBox.removeAllItems();
-            for (Skill next : Crud.getSkillLvlWiden(employeeComboBox.getValue().toString(), parentComboBox.getValue().toString(), asigneeComboBox.getValue().toString())) {
+            for (Skill next : Crud.getSkillLvlWiden(employeeComboBox.getValue().toString(), parentComboBox.getValue().toString(),asigneeComboBox.getValue().toString())) {
                 skillLvlComboBox.addItems(next.getName());
                 //System.out.println(next.getName());
             }
@@ -91,8 +93,23 @@ public class MyUI extends UI {
                 skillLvlComboBox.setStyleName("v-filterselect-error");
             }
             else{
-                this.removeStyleName("v-filterselect-error");
+                Date today = new Date(new org.joda.time.DateTime().getYear(), new org.joda.time.DateTime().getMonthOfYear() - 1, new org.joda.time.DateTime().getDayOfMonth());
+
+                employeeComboBox.removeStyleName("v-filterselect-error");
+                asigneeComboBox.removeStyleName("v-filterselect-error");
+                parentComboBox.removeStyleName("v-filterselect-error");
+                skillLvlComboBox.removeStyleName("v-filterselect-error");
+                Long id = Crud.getIdOfSkillset(employeeComboBox.getValue().toString(), parentComboBox.getValue().toString());
+
+                Insert.updateSkillSet(id, Insert.getSkillByParent(parentComboBox.getValue().toString(), skillLvlComboBox.getValue().toString()) , today, asigneeComboBox.getValue().toString());
                 Utilites.showTryNotification("Click: ","This record is updated with success!");
+
+                skillLvlComboBox.removeAllItems();
+                for (Skill next : Crud.getSkillLvlWiden(employeeComboBox.getValue().toString(), parentComboBox.getValue().toString(),asigneeComboBox.getValue().toString())) {
+                    skillLvlComboBox.addItems(next.getName());
+                    //System.out.println(next.getName());
+                }
+
             }
         });
 

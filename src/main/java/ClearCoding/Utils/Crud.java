@@ -49,12 +49,12 @@ public class Crud {
         return assignees;
     }
 
+
+
     public static List<String> getSkillParent() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Skill> inputSkills = session.createQuery("from Skill").list();
         List<Skill> input1Skills = session.createQuery("from Skill").list();
-
-        List<Skill_Set> inputSkil_Set = session.createQuery("from Skill_Set").list();
 
         List<String> outputSkils = new ArrayList<String>(0);
         for (Skill next: inputSkills)
@@ -71,6 +71,7 @@ public class Crud {
         session.close();
         return outputSkils;
     }
+
 
     public static long getIdOfParent(String parent){
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -127,6 +128,20 @@ public class Crud {
         return outputSkils;
     }
 
+
+    public static Long getIdOfSkillset(String crmd, String parent){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Skill_Set> allSkilSets = session.createQuery("from Skill_Set").list();
+        Long id = 0L;
+        for (Skill_Set next:allSkilSets){
+            if(next.getEmployeeByCrmd().getCrmd().equals(crmd))
+                if(next.getSkillBySkillId().getParentId() == getIdOfParent(parent))
+                        id = next.getId();
+        }
+        session.close();
+
+        return id;
+    }
 
 
 }
