@@ -68,7 +68,7 @@
     font-size: 18px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: -5px;
+    margin-bottom: -20px;
   }
   v-filterselect.input, .v-datefield, .v-datefield-popupcalendar{
     width: 200px;
@@ -104,9 +104,10 @@
   .v-textfield:focus,.v-textfield:active{
      border-bottom: 1px solid $accent !important;
   }
-  input.v-textfield-focus{
+  input.v-textfield-focus, .v-filterselect-focus, .v-filterselect-focus [class*="input"]:focus, .v-pressed{
     outline: none;
     box-shadow: 0 0 0 transparent !important;
+    border: none;
     border-bottom: 1px solid $accent;
   }
   .v-button{
@@ -115,6 +116,18 @@
     width: 200px;
     margin: auto;
     transition: all .5s ease-in-out;
+  }
+  .v-button.btn:focus, .v-button:focus:after, .v-button:after, a:focus, input:focus, .v-filterselect input:focus{
+    outline: none !important;
+    box-shadow: 0 0 0 transparent !important;
+    border: 1px solid $accent !important;
+    border-bottom: 2px solid $accent !important;
+  }
+  .v-button [class*="button"]:focus{
+    outline: none;
+      box-shadow: 0 0 0 transparent !important;
+      border: none;
+      border-bottom: 2px solid $accent;
   }
     .v-button.link{
       display: block;
@@ -166,6 +179,7 @@
       text-align: center;
       background: transparent;
       border: 1px solid $accent;
+      border-bottom: 2px solid $accent;
       color: $accent;
       text-transform: uppercase;
       letter-spacing: 2px;

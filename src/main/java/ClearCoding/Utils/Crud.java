@@ -53,6 +53,9 @@ public class Crud {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Skill> inputSkills = session.createQuery("from Skill").list();
         List<Skill> input1Skills = session.createQuery("from Skill").list();
+
+        List<Skill_Set> inputSkil_Set = session.createQuery("from Skill_Set").list();
+
         List<String> outputSkils = new ArrayList<String>(0);
         for (Skill next: inputSkills)
             for(Skill next1:input1Skills){
@@ -99,8 +102,7 @@ public class Crud {
         return currentSkil;
     }
 
-
-    public static List<Skill> getSkillLvlWiden(String crmd, String parent){
+    public static List<Skill> getSkillLvlWiden(String crmd, String parent, String assignee){
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         List<Skill_Set> allSkilSets = session.createQuery("from Skill_Set").list();
@@ -114,7 +116,7 @@ public class Crud {
                     if(next1.getParentId()!=null)
                         if(next1.getParentId()==getIdOfParent(parent))
                             if(numberOrNot(next1.getName()))
-                                if(toLong(next1.getName()) > getCurrentSkill(crmd, getIdOfParent(parent))) {
+                                if(toLong(next1.getName()) > getCurrentSkill(crmd, getIdOfParent(parent)) && toLong(next1.getName()) <= getCurrentSkill(assignee, getIdOfParent(parent))) {
                                     System.out.println("How you got here !!! ");
                                     outputSkils.add(next1);
                                 }

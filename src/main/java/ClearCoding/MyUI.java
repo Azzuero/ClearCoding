@@ -44,7 +44,6 @@ public class MyUI extends UI {
 
         });
 
-        DateField dateField = new DateField();
 
         //parentComboBox
         Label parentLabel = new Label("Skill Parent");
@@ -58,7 +57,7 @@ public class MyUI extends UI {
         skillLvlComboBox.setNullSelectionAllowed(false);
         parentComboBox.addValueChangeListener(e -> {
             skillLvlComboBox.removeAllItems();
-            for (Skill next : Crud.getSkillLvlWiden(employeeComboBox.getValue().toString(), parentComboBox.getValue().toString())) {
+            for (Skill next : Crud.getSkillLvlWiden(employeeComboBox.getValue().toString(), parentComboBox.getValue().toString(), asigneeComboBox.getValue().toString())) {
                 skillLvlComboBox.addItems(next.getName());
                 //System.out.println(next.getName());
             }
@@ -69,20 +68,35 @@ public class MyUI extends UI {
         sendBtn.setStyleName("btn");
 
         sendBtn.addClickListener(e->{
-            if(employeeComboBox.isEmpty())
-                Utilites.showErrNotification("Employee : ","is empty");
-            else if(asigneeComboBox.isEmpty())
-                Utilites.showErrNotification("Asignee : ","is empty");
-            else if(parentComboBox.isEmpty())
+            if(employeeComboBox.isEmpty()) {
+                Utilites.showErrNotification("Employee : ", "is empty");
+                employeeComboBox.setStyleName("v-filterselect-error");
+            }
+            else if(asigneeComboBox.isEmpty()) {
+                employeeComboBox.removeStyleName("v-filterselect-error");
+                Utilites.showErrNotification("Asignee : ", "is empty");
+                asigneeComboBox.setStyleName("v-filterselect-error");
+            }
+            else if(parentComboBox.isEmpty()){
+                employeeComboBox.removeStyleName("v-filterselect-error");
+                asigneeComboBox.removeStyleName("v-filterselect-error");
                 Utilites.showErrNotification("Skill Parent : ","is empty");
-            else if(skillLvlComboBox.isEmpty())
+                parentComboBox.setStyleName("v-filterselect-error");
+            }
+            else if(skillLvlComboBox.isEmpty()){
+                employeeComboBox.removeStyleName("v-filterselect-error");
+                asigneeComboBox.removeStyleName("v-filterselect-error");
+                parentComboBox.removeStyleName("v-filterselect-error");
                 Utilites.showErrNotification("Skill Level : ","is empty");
+                skillLvlComboBox.setStyleName("v-filterselect-error");
+            }
             else{
+                this.removeStyleName("v-filterselect-error");
                 Utilites.showTryNotification("Click: ","This record is updated with success!");
             }
         });
 
-        formLayout.addComponents(employeeLable, employeeComboBox, comboAsigneelabel, asigneeComboBox, dateField, parentLabel, parentComboBox, skillLvlLabel, skillLvlComboBox, sendBtn);
+        formLayout.addComponents(employeeLable, employeeComboBox, comboAsigneelabel, asigneeComboBox, parentLabel, parentComboBox, skillLvlLabel, skillLvlComboBox, sendBtn);
         mainPage.addComponents(formLayout);
         mainPage.setMargin(true);
         mainPage.setSpacing(true);
