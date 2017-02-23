@@ -1,9 +1,7 @@
 package ClearCoding.Utils;
 
-import ClearCoding.Entity.Employee;
 import ClearCoding.Entity.Skill;
 import ClearCoding.Entity.Skill_Set;
-import com.vaadin.ui.Notification;
 import org.hibernate.Session;
 
 import java.util.Date;
@@ -11,16 +9,6 @@ import java.util.List;
 
 public class Insert {
 
-    public static Employee getEmployeeByCrmd(String crmd){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
-        String query = "from Employee where crmd="+crmd;
-        List<Employee> employee = session.createQuery(query).list();
-        Employee returnedEmployee = new Employee();
-        System.out.println(employee.get(0).getCrmd());
-        session.close();
-        return employee.get(0);
-    }
     public static Skill getSkillByParent(String parent, String name){
         Session session = HibernateUtil.getSessionFactory().openSession();
 
@@ -46,8 +34,6 @@ public class Insert {
         skill_set.setSkillBySkillId(skill);
         skill_set.setAssignedDate(assignedDate);
         skill_set.setAssigneeId(assignee);
-
-        Notification.show("Update: ","This record is updated with success!" ,Notification.Type.TRAY_NOTIFICATION);
 
         session.update(skill_set);
 

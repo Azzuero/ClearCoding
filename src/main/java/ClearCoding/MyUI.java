@@ -25,14 +25,13 @@ public class MyUI extends UI {
         VerticalLayout mainPage = new VerticalLayout();
 
         //employeeComboBox
-        Label employeeLable = new Label("CRMD");
+        Label label = new Label("Add Skill Set");
         ComboBox employeeComboBox = new ComboBox();
         for(Employee employeeItem:Crud.getEmployeeList())
             employeeComboBox.addItem(employeeItem.getCrmd());
         employeeComboBox.setInputPrompt("Employee");
 
         //assigneeComboBox
-        Label comboAsigneelabel = new Label("Asignee CRMD");
         ComboBox asigneeComboBox = new ComboBox();
         asigneeComboBox.setNullSelectionAllowed(false);
         asigneeComboBox.setInputPrompt("Assignee");
@@ -48,21 +47,26 @@ public class MyUI extends UI {
 
 
         //parentComboBox
-        Label parentLabel = new Label("Skill Parent");
         ComboBox parentComboBox = new ComboBox();
         parentComboBox.setNullSelectionAllowed(false);
         parentComboBox.addItems(Crud.getSkillParent());
+        parentComboBox.setInputPrompt("Skill Parent");
+
 
         //skilLvlComboBox
-        Label skillLvlLabel = new Label("Skill Lavel");
         ComboBox skillLvlComboBox = new ComboBox();
         skillLvlComboBox.setNullSelectionAllowed(false);
+        skillLvlComboBox.setInputPrompt("Skill LVL");
         parentComboBox.addValueChangeListener(e -> {
-            skillLvlComboBox.removeAllItems();
-            for (Skill next : Crud.getSkillLvlWiden(employeeComboBox.getValue().toString(), parentComboBox.getValue().toString(),asigneeComboBox.getValue().toString())) {
-                skillLvlComboBox.addItems(next.getName());
-                //System.out.println(next.getName());
-            }
+            if(!asigneeComboBox.isEmpty()){
+                skillLvlComboBox.removeAllItems();
+                for (Skill next : Crud.getSkillLvlWiden(employeeComboBox.getValue().toString(), parentComboBox.getValue().toString(),asigneeComboBox.getValue().toString())) {
+                    skillLvlComboBox.addItems(next.getName());
+                    //System.out.println(next.getName());
+                }
+            }else
+                Utilites.showErrNotification("Assignee is Empty: ","Please chose an assignee!!!");
+
         });
 
         //sendBtn
@@ -102,18 +106,17 @@ public class MyUI extends UI {
                 Long id = Crud.getIdOfSkillset(employeeComboBox.getValue().toString(), parentComboBox.getValue().toString());
 
                 Insert.updateSkillSet(id, Insert.getSkillByParent(parentComboBox.getValue().toString(), skillLvlComboBox.getValue().toString()) , today, asigneeComboBox.getValue().toString());
-                Utilites.showTryNotification("Click: ","This record is updated with success!");
+                Utilites.showTryNotification("Update With Success: ","This record is updated with success!");
 
                 skillLvlComboBox.removeAllItems();
                 for (Skill next : Crud.getSkillLvlWiden(employeeComboBox.getValue().toString(), parentComboBox.getValue().toString(),asigneeComboBox.getValue().toString())) {
                     skillLvlComboBox.addItems(next.getName());
-                    //System.out.println(next.getName());
                 }
 
             }
         });
 
-        formLayout.addComponents(employeeLable, employeeComboBox, comboAsigneelabel, asigneeComboBox, parentLabel, parentComboBox, skillLvlLabel, skillLvlComboBox, sendBtn);
+        formLayout.addComponents(label, employeeComboBox, asigneeComboBox, parentComboBox,  skillLvlComboBox, sendBtn);
         mainPage.addComponents(formLayout);
         mainPage.setMargin(true);
         mainPage.setSpacing(true);

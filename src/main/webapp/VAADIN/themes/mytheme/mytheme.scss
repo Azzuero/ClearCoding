@@ -65,14 +65,17 @@
   }
   .v-label{
     text-align: center;
-    font-size: 18px;
+    font-size: 20px;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: -20px;
   }
-  v-filterselect.input, .v-datefield, .v-datefield-popupcalendar{
+    .mytheme [class*="spacing"] > tbody > [class*="row"] > td, .v-formlayout-contentcell{
+      padding-top: 25px !important;
+    }
+  .v-filterselect.input, .v-datefield, .v-datefield-popupcalendar{
     width: 200px;
-    margin: 15px 0;
+    margin: 45px 0 !important;
     font-size: 16px;
     letter-spacing: 1.5px;
     background-color: transparent;
@@ -82,6 +85,7 @@
     outline: none;
     border-radius: 0;
     box-shadow: none;
+
   }
   .v-filterselect-input, .v-datefield, .v-datefield-popupcalendar{
     border: none !important;
