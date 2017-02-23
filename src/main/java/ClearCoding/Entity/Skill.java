@@ -42,25 +42,4 @@ public class Skill {
         this.parentId = parentId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Skill skill = (Skill) o;
-
-        if (id != skill.id) return false;
-        if (name != null ? !name.equals(skill.name) : skill.name != null) return false;
-        if (parentId != null ? !parentId.equals(skill.parentId) : skill.parentId != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
-        return result;
-    }
 }

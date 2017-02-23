@@ -1,8 +1,6 @@
 package ClearCoding.Utils;
 
-import ClearCoding.Entity.Employee;
-import ClearCoding.Entity.Skill;
-import ClearCoding.Entity.Skill_Set;
+import ClearCoding.Entity.*;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
@@ -10,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static ClearCoding.Utils.FieldControler.toLong;
 import static ClearCoding.Utils.Utilites.numberOrNot;
 
 public class Crud {
@@ -23,6 +20,7 @@ public class Crud {
         session.close();
         return allEmployees;
     }
+
     public static List<Employee> getAssignee(String CRMD) {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
@@ -36,9 +34,9 @@ public class Crud {
         List<Employee> assignees = new ArrayList<Employee>(0);
         for(Employee next: getallemployee){
             if(next.getAmbient().equals(employee.getAmbient())){
-                if(FieldControler.getEmployeeRank(next.getPosition()) > FieldControler.getEmployeeRank(employee.getPosition()))
+                if(Utilites.getEmployeeRank(next.getPosition()) > Utilites.getEmployeeRank(employee.getPosition()))
                     assignees.add(next);
-                else if (FieldControler.getEmployeeRank(next.getPosition()) == 4 && FieldControler.getEmployeeRank(employee.getPosition()) == 4){
+                else if (Utilites.getEmployeeRank(next.getPosition()) == 4 && Utilites.getEmployeeRank(employee.getPosition()) == 4){
                     if (!next.getCrmd().equals(employee.getCrmd()))
                         assignees.add(next);
                 }
@@ -64,7 +62,7 @@ public class Crud {
                         outputSkils.add(next1.getName());
                     }
             }
-        Set<String> hs = new HashSet<String>();
+        Set<String> hs = new HashSet<>();
         hs.addAll(outputSkils);
         outputSkils.clear();
         outputSkils.addAll(hs);
@@ -95,7 +93,7 @@ public class Crud {
         for(Skill_Set next: skill_set){
             if(next.getEmployeeByCrmd().getCrmd().equals(crmd))
                 if(next.getSkillBySkillId().getParentId() == parent)
-                    currentSkil = toLong(next.getSkillBySkillId().getName());
+                    currentSkil = Utilites.toLong(next.getSkillBySkillId().getName());
         }
 
 
@@ -117,10 +115,8 @@ public class Crud {
                     if(next1.getParentId()!=null)
                         if(next1.getParentId()==getIdOfParent(parent))
                             if(numberOrNot(next1.getName()))
-                                if(toLong(next1.getName()) > getCurrentSkill(crmd, getIdOfParent(parent)) && toLong(next1.getName()) <= getCurrentSkill(assignee, getIdOfParent(parent))) {
-                                    System.out.println("How you got here !!! ");
+                                if(Utilites.toLong(next1.getName()) > getCurrentSkill(crmd, getIdOfParent(parent)) && Utilites.toLong(next1.getName()) <= getCurrentSkill(assignee, getIdOfParent(parent)))
                                     outputSkils.add(next1);
-                                }
                 }
         }
         session.close();
@@ -142,6 +138,5 @@ public class Crud {
 
         return id;
     }
-
 
 }

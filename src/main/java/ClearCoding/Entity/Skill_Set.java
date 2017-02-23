@@ -23,26 +23,6 @@ public class Skill_Set {
         this.assigneeId = assigneeId;
     }
 
-    @Basic
-    @Column(name = "ASSIGNED_DATE", nullable = true)
-    public Date getAssignedDate() {
-        return assignedDate;
-    }
-
-    public void setAssignedDate(Date assignedDate) {
-        this.assignedDate = assignedDate;
-    }
-
-    @Basic
-    @Column(name = "ASSIGNEE_ID", nullable = true, length = 10)
-    public String getAssigneeId() {
-        return assigneeId;
-    }
-
-    public void setAssigneeId(String assigneeId) {
-        this.assigneeId = assigneeId;
-    }
-
     @Id
     @Column(name = "ID", nullable = false, precision = 0)
     public long getId() {
@@ -52,7 +32,6 @@ public class Skill_Set {
     public void setId(long id) {
         this.id = id;
     }
-
 
     @ManyToOne
     @JoinColumn(name = "CRMD", referencedColumnName = "CRMD", nullable = false)
@@ -73,4 +52,26 @@ public class Skill_Set {
     public void setSkillBySkillId(Skill skillBySkillId) {
         this.skillBySkillId = skillBySkillId;
     }
+
+    @Basic
+    @Column(name = "ASSIGNED_DATE", nullable = true)
+    public Date getAssignedDate() {
+        return assignedDate;
+    }
+
+    public void setAssignedDate(Date assignedDate) {
+        this.assignedDate = assignedDate;
+    }
+
+    @Basic
+    @Column(name = "ASSIGNEE_ID", nullable = true, length = 10)
+    public String getAssigneeId() {
+        return assigneeId;
+    }
+
+    public void setAssigneeId(String assigneeId) {
+        this.assigneeId = assigneeId;
+    }
+
+
 }
