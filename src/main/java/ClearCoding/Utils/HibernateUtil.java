@@ -2,7 +2,7 @@ package ClearCoding.Utils;
 
 import org.hibernate.cfg.Configuration;
 import org.hibernate.SessionFactory;
-
+//
 public class HibernateUtil {
 
     private static final SessionFactory sessionFactory = buildSessionFactory();

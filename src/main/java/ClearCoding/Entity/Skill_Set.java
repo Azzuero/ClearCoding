@@ -2,7 +2,7 @@ package ClearCoding.Entity;
 
 import javax.persistence.*;
 import java.util.Date;
-
+//
 @Entity
 @Table(name = "SKILL_SET")
 public class Skill_Set {

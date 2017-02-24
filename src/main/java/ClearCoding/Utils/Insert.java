@@ -5,7 +5,7 @@ import org.hibernate.Session;
 
 import java.util.Date;
 import java.util.List;
-
+//
 public class Insert {
 
     public static Skill getSkillByParent(String parent, String name){
