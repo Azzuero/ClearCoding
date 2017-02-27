@@ -81,7 +81,7 @@ public class MyUI extends UI {
 
             });
 
-            //sendBtn
+        //sendBtn//
             Button sendBtn = new Button("SEND");
             sendBtn.setStyleName("btn");
 
