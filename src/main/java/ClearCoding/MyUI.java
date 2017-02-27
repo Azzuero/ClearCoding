@@ -123,6 +123,7 @@ public class MyUI extends UI {
         mainPage.setMargin(true);
         mainPage.setSpacing(true);
         setContent(mainPage);
+        //finita la comedia
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
