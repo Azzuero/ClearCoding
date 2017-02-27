@@ -149,12 +149,12 @@ public class Crud {
 
         for (Skill_Set temporarSkillSet : allSkilSets) {
             if (isEqualsCRMDfromSkillSet(crmd, temporarSkillSet))
-                for(Skill next1: allSkils){
-                    if(next1.getParentId()!=null)
-                        if(next1.getParentId()==getIdOfParent(parent))
-                            if(numberOrNot(next1.getName()))
-                                if(Utilites.toLong(next1.getName()) > getCurrentSkill(crmd, getIdOfParent(parent)) && Utilites.toLong(next1.getName()) <= getCurrentSkill(assignee, getIdOfParent(parent)))
-                                    outputSkils.add(next1);
+                for (Skill temporarSkill : allSkils) {
+                    if (temporarSkill.getParentId() != null)
+                        if (temporarSkill.getParentId() == getIdOfParent(parent))
+                            if (numberOrNot(temporarSkill.getName()))
+                                if (Utilites.toLong(temporarSkill.getName()) > getCurrentSkill(crmd, getIdOfParent(parent)) && Utilites.toLong(temporarSkill.getName()) <= getCurrentSkill(assignee, getIdOfParent(parent)))
+                                    outputSkils.add(temporarSkill);
                 }
         }
         session.close();
