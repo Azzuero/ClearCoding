@@ -1,6 +1,8 @@
 package ClearCoding.Utils;
 
-import ClearCoding.Entity.*;
+import ClearCoding.Entity.Employee;
+import ClearCoding.Entity.Skill;
+import ClearCoding.Entity.Skill_Set;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
@@ -25,31 +27,31 @@ public class Crud {
     }
 
     private static Employee getEmployeebyCRMD(String CRMD, List<Employee> getallemployee, Employee employee) {
-        for(Employee next: getallemployee){
-            if(isEqualsCRMD(CRMD, next))
-                employee = next;
+        for (Employee temporarEmployee : getallemployee) {
+            if (isEqualsCRMD(CRMD, temporarEmployee))
+                employee = temporarEmployee;
         }
         return employee;
     }
 
-    private static boolean isSenior(Employee employee, Employee next) {
-        return Utilites.getEmployeeRank(next.getPosition()) == 4 && Utilites.getEmployeeRank(employee.getPosition()) == 4;
+    private static boolean isSenior(Employee employee, Employee temporarEmployee) {
+        return Utilites.getEmployeeRank(temporarEmployee.getPosition()) == 4 && Utilites.getEmployeeRank(employee.getPosition()) == 4;
     }
 
-    private static boolean isEqualsAmbient(Employee employee, Employee next) {
-        return next.getAmbient().equals(employee.getAmbient());
+    private static boolean isEqualsAmbient(Employee employee, Employee temporarEmployee) {
+        return temporarEmployee.getAmbient().equals(employee.getAmbient());
     }
 
-    private static boolean isEqualsCRMD(String CRMD, Employee next) {
-        return next.getCrmd().equals(CRMD);
+    private static boolean isEqualsCRMD(String CRMD, Employee temporarEmployee) {
+        return temporarEmployee.getCrmd().equals(CRMD);
     }
 
-    private static boolean isEqualsCRMDfromSkillSet(String crmd, Skill_Set next) {
-        return isEqualsCRMD(crmd, next.getEmployeeByCrmd());
+    private static boolean isEqualsCRMDfromSkillSet(String crmd, Skill_Set temporarSkillSet) {
+        return isEqualsCRMD(crmd, temporarSkillSet.getEmployeeByCrmd());
     }
 
-    private static boolean isLVLofParentfromSkillSet(String parent, Skill_Set next) {
-        return next.getSkillBySkillId().getParentId() == getIdOfParent(parent);
+    private static boolean isLVLofParentfromSkillSet(String parent, Skill_Set temporarSkillSet) {
+        return temporarSkillSet.getSkillBySkillId().getParentId() == getIdOfParent(parent);
     }
 
     public static List<Employee> getEmployeeList() {
@@ -65,17 +67,17 @@ public class Crud {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         List<Employee> getallemployee = session.createQuery("from Employee").list();
-        Employee employee = new Employee();
-        employee = getEmployeebyCRMD(CRMD, getallemployee, employee);
+        Employee curentEmployee = new Employee();
+        curentEmployee = getEmployeebyCRMD(CRMD, getallemployee, curentEmployee);
 
         List<Employee> assignees = new ArrayList<Employee>(0);
-        for(Employee next: getallemployee){
-            if(isEqualsAmbient(employee, next)){
-                if(isAssignee(employee, next))
-                    assignees.add(next);
-                else if (isSenior(employee, next)){
-                    if (!isEqualsCRMD(employee.getCrmd(), next))
-                        assignees.add(next);
+        for (Employee temporarEmployee : getallemployee) {
+            if (isEqualsAmbient(curentEmployee, temporarEmployee)) {
+                if (isAssignee(curentEmployee, temporarEmployee))
+                    assignees.add(temporarEmployee);
+                else if (isSenior(curentEmployee, temporarEmployee)) {
+                    if (!isEqualsCRMD(curentEmployee.getCrmd(), temporarEmployee))
+                        assignees.add(temporarEmployee);
                 }
             }
         }
@@ -93,11 +95,11 @@ public class Crud {
         List<Skill> SkillList2 = session.createQuery("from Skill").list();
 
         List<String> outputSkils = new ArrayList<String>(0);
-        for (Skill next: SkillList1)
-            for(Skill next1:SkillList2){
-                if(numberOrNot(next.getName()))
-                    if(next.getParentId()==next1.getId()){
-                        outputSkils.add(next1.getName());
+        for (Skill temporarSkill1 : SkillList1)
+            for (Skill temporarSkill2 : SkillList2) {
+                if (numberOrNot(temporarSkill1.getName()))
+                    if (temporarSkill1.getParentId() == temporarSkill2.getId()) {
+                        outputSkils.add(temporarSkill2.getName());
                     }
             }
         session.close();
@@ -112,8 +114,8 @@ public class Crud {
 
         List<Skill> skills = session.createQuery("from Skill").list();
         Long parentId = 0L;
-        for(Skill next: skills){
-            if(next.getName().equals(parent)) parentId = next.getId();
+        for (Skill temporarSkill : skills) {
+            if (temporarSkill.getName().equals(parent)) parentId = temporarSkill.getId();
         }
         session.close();
         return parentId;
@@ -126,10 +128,10 @@ public class Crud {
 
         long currentSkil = 0;
 
-        for(Skill_Set next: skill_set){
-            if(isEqualsCRMDfromSkillSet(crmd, next))
-                if(next.getSkillBySkillId().getParentId() == parent)
-                    currentSkil = Utilites.toLong(next.getSkillBySkillId().getName());
+        for (Skill_Set temporarSkillSet : skill_set) {
+            if (isEqualsCRMDfromSkillSet(crmd, temporarSkillSet))
+                if (temporarSkillSet.getSkillBySkillId().getParentId() == parent)
+                    currentSkil = Utilites.toLong(temporarSkillSet.getSkillBySkillId().getName());
         }
 
 
@@ -145,8 +147,8 @@ public class Crud {
         List<Skill> outputSkils = new ArrayList<>(0);
 
 
-        for (Skill_Set next:allSkilSets){
-            if(isEqualsCRMDfromSkillSet(crmd, next))
+        for (Skill_Set temporarSkillSet : allSkilSets) {
+            if (isEqualsCRMDfromSkillSet(crmd, temporarSkillSet))
                 for(Skill next1: allSkils){
                     if(next1.getParentId()!=null)
                         if(next1.getParentId()==getIdOfParent(parent))
@@ -165,10 +167,10 @@ public class Crud {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Skill_Set> allSkilSets = session.createQuery("from Skill_Set").list();
         Long id = 0L;
-        for (Skill_Set next:allSkilSets){
-            if(isEqualsCRMDfromSkillSet(crmd, next))
-                if(isLVLofParentfromSkillSet(parent, next))
-                        id = next.getId();
+        for (Skill_Set temporarSkillSet : allSkilSets) {
+            if (isEqualsCRMDfromSkillSet(crmd, temporarSkillSet))
+                if (isLVLofParentfromSkillSet(parent, temporarSkillSet))
+                    id = temporarSkillSet.getId();
         }
         session.close();
 

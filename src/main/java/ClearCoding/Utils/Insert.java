@@ -1,6 +1,7 @@
 package ClearCoding.Utils;
 
-import ClearCoding.Entity.*;
+import ClearCoding.Entity.Skill;
+import ClearCoding.Entity.Skill_Set;
 import org.hibernate.Session;
 
 import java.util.Date;
@@ -14,10 +15,10 @@ public class Insert {
         List<Skill> skills = session.createQuery("from Skill").list();
         Skill returnedSkill = new Skill();
 
-        for(Skill next: skills){
-            if(next.getParentId()!=null)
-                if(next.getParentId()==Crud.getIdOfParent(parent) && next.getName().equals(name))
-                    returnedSkill = next;
+        for (Skill temporarSkill : skills) {
+            if (temporarSkill.getParentId() != null)
+                if (temporarSkill.getParentId() == Crud.getIdOfParent(parent) && temporarSkill.getName().equals(name))
+                    returnedSkill = temporarSkill;
         }
         session.close();
 
