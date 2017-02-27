@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static ClearCoding.Utils.Utilites.numberOrNot;
+import static ClearCoding.Utils.Utilites.isNumber;
 //
 public class Crud {
 
@@ -97,7 +97,7 @@ public class Crud {
         List<String> outputSkils = new ArrayList<String>(0);
         for (Skill temporarSkill1 : SkillList1)
             for (Skill temporarSkill2 : SkillList2) {
-                if (numberOrNot(temporarSkill1.getName()))
+                if (isNumber(temporarSkill1.getName()))
                     if (temporarSkill1.getParentId() == temporarSkill2.getId()) {
                         outputSkils.add(temporarSkill2.getName());
                     }
@@ -152,7 +152,7 @@ public class Crud {
                 for (Skill temporarSkill : allSkils) {
                     if (temporarSkill.getParentId() != null)
                         if (temporarSkill.getParentId() == getIdOfParent(parent))
-                            if (numberOrNot(temporarSkill.getName()))
+                            if (isNumber(temporarSkill.getName()))
                                 if (Utilites.toLong(temporarSkill.getName()) > getCurrentSkill(crmd, getIdOfParent(parent)) && Utilites.toLong(temporarSkill.getName()) <= getCurrentSkill(assignee, getIdOfParent(parent)))
                                     outputSkils.add(temporarSkill);
                 }

@@ -7,7 +7,7 @@ import com.vaadin.ui.Notification;
 public class Utilites {
 
 
-    public static boolean numberOrNot(String input){
+    public static boolean isNumber(String input){
         try
         {
             Integer.parseInt(input);
@@ -18,7 +18,6 @@ public class Utilites {
         }
         return true;
     }
-
 
     public static Notification showNotification(String caption, String description, Notification.Type type){
         Notification notification = new Notification(caption, description, type);
